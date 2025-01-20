@@ -4,22 +4,33 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Solverクラスのテスト。
+ * JankenGameクラスのテスト。
  */
-public class JankenTest
-{
+public class JankenTest {
+    @Test
+    public void testGenerateCpuHand() {
+        Janken game = new Janken();
+        Janken.Hand cpuHand = game.generateCpuHand();
+        assertNotNull(cpuHand, "CPUの手がnullであってはならない");
+    }
+
     @Test
     public void testJudge() {
-        Janken janken = new Janken();
+        Janken game = new Janken();
 
-        // プレイヤー: ROCK, CPU: SCISSORS -> 勝ち
-        assertEquals("Win", janken.judge(Janken.Hand.ROCK, Janken.Hand.SCISSORS));
+        // プレイヤーがROCKの場合のテスト
+        assertEquals("Win", game.judge(Janken.Hand.ROCK, Janken.Hand.SCISSORS));
+        assertEquals("Lose", game.judge(Janken.Hand.ROCK, Janken.Hand.PAPER));
+        assertEquals("Draw", game.judge(Janken.Hand.ROCK, Janken.Hand.ROCK));
 
-        // プレイヤー: ROCK, CPU: PAPER -> 負け
-        assertEquals("Lose", janken.judge(Janken.Hand.ROCK, Janken.Hand.PAPER));
+        // プレイヤーがPAPERの場合のテスト
+        assertEquals("Win", game.judge(Janken.Hand.PAPER, Janken.Hand.ROCK));
+        assertEquals("Lose", game.judge(Janken.Hand.PAPER, Janken.Hand.SCISSORS));
+        assertEquals("Draw", game.judge(Janken.Hand.PAPER, Janken.Hand.PAPER));
 
-        // プレイヤー: ROCK, CPU: ROCK -> 引き分け
-        assertEquals("Draw", janken.judge(Janken.Hand.ROCK, Janken.Hand.ROCK));
+        // プレイヤーがSCISSORSの場合のテスト
+        assertEquals("Win", game.judge(Janken.Hand.SCISSORS, Janken.Hand.PAPER));
+        assertEquals("Lose", game.judge(Janken.Hand.SCISSORS, Janken.Hand.ROCK));
+        assertEquals("Draw", game.judge(Janken.Hand.SCISSORS, Janken.Hand.SCISSORS));
     }
 }
-
